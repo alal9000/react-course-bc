@@ -1,10 +1,16 @@
-function List(){
-    const fruits = [{name: 'apple', calories:95}, {name: 'orange', calories: 45}, {name: 'bananna', calories: 105}, {name: 'coconut', calories: 159}, {name: 'pineapple', calories: 37}];
+function List() {
+  const fruits = [
+    { id: 1, name: "apple", calories: 95 },
+    { id: 2, name: "orange", calories: 45 },
+    { id: 3, name: "bananna", calories: 105 },
+    { id: 4, name: "coconut", calories: 159 },
+    { id: 5, name: "pineapple", calories: 37 }
+  ];
 
-    fruits.sort();
+  fruits.sort();
 
-    const listItems = fruits.map(fruit => <li>{fruit.name}</li>)
+  const listItems = fruits.map((fruit) => <li key={fruit.id}>{fruit.name}: &nbsp;<b>{fruit.calories}</b></li>);
 
-    return (<ol>{listItems}</ol>);
+  return <ol>{listItems}</ol>;
 }
-export default List
+export default List;
