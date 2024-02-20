@@ -1,11 +1,10 @@
-import Button2 from "./Button2";
-import ProfilePicture from "./ProfilePicture";
+import Counter from "./Counter";
 
 
 function App() {
 
 
-  return (<ProfilePicture />);
+  return (<Counter />);
 }
 
 export default App;
