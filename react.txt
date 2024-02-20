@@ -1,0 +1,332 @@
+up2: review spinner and why error is an object returned from useGenres function
+
+-react is a js library for building dynamic and interactive user interfaces
+-when a webpage is loaded in the browser, the browser takes the html code and creates a tree like data structure called the DOM or document object model. The DOM allows us to use JS and change the page content in response to user actions.
+-with react we dont need to worry about querying and updating DOM elements, instead we describe a webpage using small reuseable components and react will take care of efficiently creating and updating DOM elements.
+-components help us write reusable, modular and better organized code.
+-a react app is a tree of components with the app being the root, bringing everything together
+-we use the npm install command to install the 3rd party dependencies for our app
+-package.json: in this file we can find information about the project, ie: name, version, scripts and dependencies.
+-the typescript compiler will compile our code to JS. In tsconfig.json - this file contains a bunch a bunch of settings to compile our TS code to JS.
+-we use a function based approach to building react components because they are more consciece and easier to write. We should always follow PascalCasing when creating a function components
+-we write JSX (JavaScript XML) inside the middle of our JS code. Under the hood this JSX will be compiled down to regular JS.
+-App.tsx is our root component and main.tsx is the entry point to our app.
+-with JSX we describe the UI of our application with html and JS. JSX allows us to easily create dynamic content - so we can write any JS expressions inside our JSX. With JSX it allows us to easily describe the UI of our apps. JSX stands for JavaScript XML and is a syntax that allow us to combine html and JS in a readable and expressive way making it easier to create complex user interfaces.
+-when our app starts react takes our component tree and builds a JS data structure called the virtual dom. This is different from the actual DOM in the browser. Its a lighweight in memory representation of our component tree, where each node represents a component and its properties. When the state or data of a component changes, react updates the corresponding node in the virtual DOM to reflect the new state. It then compares the current virtual dom to the previous version and identifies the nodes that need to be updated, it will then update those nodes in the actual DOM. The updating of the actual DOM is done by a companion library called react-DOM which is used for web applications. We can use react native library for rendering our component tree inside inside mobile applications.
+-react is platform agnostic which means we can use it to build apps on web, mobile or desktop devices
+-a library is a tool that provides specific functionality while a framework is a set of tools and guidelines for building apps. So a library is like a hammer while a toolset is like a tool belt.
+-routing: allowing a user to go from one page to another
+-prettier ads parethesis so we can break up our JSX markup into multiple lines
+-in react a component cannot return more than one element - to solve this problem we can wrap our code in a fragment which is just empty angle brackets
+-In JSX we can only use html elements or other react components. If we want to render dynamic content such a programming logic we have to wrap it inside braces. ie: {items.map(item => <li>{item}</li>)}
+-JSX has an html like syntax where we can include JS expressions to make it dynamic
+-we can't use the if keyword inside curly braces in JSX, instead use the ternary operator syntax ie: { items.length === 0 ? <p>no item found</p> : null } we can use however if statements inside JSX expressions ie: if (name) return <h1>Hello {name}</h1>; just not inside curly braces as they are for JS expressions, so code that return a value.
+-we can use the && operator to shorten a conditional statement like: { items.length === 0 ? <p>no item found</p> : null } ie: {items.length === 0 && <p>No item found</p> } with this syntax, if the condition is true the operand to the right of the && operator will be returned, if the condition is false then false is just returned, so these two statements will do the same thing in the browser.
+-with type annotation we can specify the type of our parameters, variables and so on. ie: const handleClick = (event: MouseEvent) => console.log(event)
+-the advantages of typescript, we get auto completion and type safety (less errors due to incorrect types at runtime). We can catch type related errors at compile time rather than at runtime this allows to write more reliable and bug free code.
+-we call functions whose job it is to handle events, event handlers and we prefix their name with 'handle' ie: const handleClick = (event: MouseEvent) => console.log(event);
+-rending content dynamically means rendering content based on data or some logic or condition. To render content dynamically in JSX we use curly braces ie: {} inside curly braces we can write any JS expression (code that returns a value)
+-A JSX expression is the HTML like syntax you return from your react component. We cannot write JS logic here, only JS expressions inside curly braces
+-variables that we declare inside a function component are local in scope to that component, its like a little secret inside that component. React is not aware of it. We should tell react that a component is going to have data or state that changes overtime. To do that we use one of the built in functions in react called useState() - this function is called a hook. A hook is a function that allows us to tap into built in features in react. A hook allows us to 'hook' onto react features.
+-the useState() hook returns an array with two elements, the first is the variable we passed as an input the second is an updater function that we use to update the value of the variable
+-when we update our variable using the updater function from userState() react will be notified that the state of our function has changed and then it will re render our component - which causes the DOM to be updated under the hood.
+-each react component has its own independant state. So if we have duplicate components then the state in one does not change the state in the other
+-props (or properties) are the inputs to our components
+-using a TS interface we can define the shape of props or inputs to our components: ie interface Props { items: string[]; heading: string;} we use pascal casing for the name of interfaces
+-using props we can pass data or input to our components: on the root app we set properties on our component like html syntax ie: <ListGroup items={items} heading="Cities" /> the actual values are set on the root app level ie: we define this string array inside the root app: let items = ["new york", "san francisco", "tokyo", "london", "paris"]; the parameterized values are set on the actual component ie: interface Props { items: string[]; heading: string;} function ListGroup({ items, heading }: Props) {}
+-for events, by convention we start the name of props with 'on' ie: onClick or onSelectItem
+-we should notify our root component (App.tsx) when a function is called from our child component. We do this by passing functions via props. ie: when an item is selected we notify our root app by including a function signature in our interface object. We pass the function via props to our component and call the function when our list element is clicked. In the root app then we add the new function prop like an html atttribute and define the actual implementation of that function and pass a reference to it in the prop
+-props: input passed to a component. They are like function arguments. We should treat props as immutable (or unchangable / read only) so we should not change our props in our components. ie: function ListGroup({ items, heading, onSelectItem }: Props) {}; heading = ""; Anytime props change, react will re-render our component.
+-state: data managed by a component that can change over time. They are like local variables inside a function. State is mutable. Anytime state changes, react will re-render our component.
+-if we type rcfe in vscode we can get boiler plate to export a component
+-there is a special props called children that if we pass to our component will allow us to pass our props as children of our component. So using the children prop we can pass children to our component ie: interface Props {children: string;} const Alert = ({ children }: Props) => {} return (<div className="alert alert-primary">{children}</div>) <Alert>Hello World</Alert>. If we want to pass html content to our component we can set the type of the children prop to ReactNode
+-as your building react apps and you better want to understand your components and how they work. If you want to inspect their props and state, use react dev tools
+-best approach to build applications: one step at a time, dont try to do too many things together
+-we can use the array.map() method to render a list in JSX - when mapping items each item must have a unique key which can be a string or a number
+-we can use an if statement or the ternary operator to conditionally render content
+-components can optionally have props (short for properties) to accept input. 
+-We use props to pass data and functions to a component. Functions are used to notify the parent of a component about certain events that occur in the component such as an item being clicked or selected
+-we use a TS interface to define the shape of props (ie: name and type)
+-in programming we have a concept called cohesion: which means things that are related should be next to each other and things that are unrelated should be seperate
+-use these commands to revert your working directory to a previous commit without losing your commit history # Soft reset to the target commit - git reset --soft <target-commit> # Checkout the files from the target commit git checkout .
+-the problem with vanilla css is if we have another stylesheet somewhere else where we have a css class with the same name, we are going to run into clashes. This is the problem that css modules try to solve
+-hyphen is not a valid property name in JS or TS
+-encoding means taking a value or data and applying an algorithm or a set of rules to transform it into another representation. So encodeding means taking a value and applying an algorithm and the new value that comes out is the encoded value.
+-benefits of css-in-js: scoped styles, all the TS/JS and CSS code in one place, easier to delete a component and easier to style based on props / state
+-git checkout <hash>, git reset, git checkout ., git checkout -b new and git reflog can all help your working directory to rewind to previous states.
+-seperation of concerns: divide a program into distinct sections where each section handles a specific functionality, rather than having everything in one place. With this our apps will be more modular, easier to understand, easier to 
+maintain and easier to modify
+-options we have for styling react components - vanilla css, css modules, css in JS and inline styles.
+-we may experience conflicts with vanilla css if the same css classes are defined in multiple files. Css modules resolved this issue by encoding unique class names
+-inline styles can make our code hard to maintain and should only be used as a last resort
+-state management is a fundamental concept in react
+-state hook: 1. react updates state asynchronously so in the future not immediately, 2. state is stored outside of a component due to scoping reasons, 3. We can only use hooks at the top level of our components (not in if statements, for loops or nested functions beacuse these constructs can impact the order in which the state hook is called )
+-use the state hook at the top of our components, so under the function name
+-in JS variables that we declare inside a function are scoped to that function. So when said function has finished execution our local variable will be removed from the memory. This is why we use the state hook to store the state outside the component it is declared in
+-we use the state hook in react to declare and initialize state data in our components
+-avoid using the state hook to declare redundant and unessesary state variables like anything that can be computed from existing variables ie: fullName when you have already these two constants: const [firstName, setFirstName] = useState(''); const [lastName, setLastName] = useState('');
+-when state variables are related, its better to group them inside an object
+-where possible when using objects dont go for deeply nested structures ie: objects within objects that are within yet another object because later when updating these objects will be difficult. So prefer a flat structure
+-pure function: given the same input, always returns the same result - always try to keep your react components pure for performance reasons as react can skip re-renders. To keep components pure, we should keep changes out of the render phase, we should not change any objects that existed before rendering. So we want to get the same result every time we render our component
+-strict mode is a tool that highlights potential problems in your react code during development. When strict mode is enabled in developement, strict mode renders each component twice, the first to detect issues the second is the actual dom render. Be aware of this as it can cause unexpecetd behaviour. This is only in dev, in prod our components will only render once
+-when dealing with objects or arrays we should remember to treat them as immutable or read-only just like props. So we should not mutate or change arrays or objects, instead we should give react a new array or object
+-the spread operator ( ...<object>) in JS is shallow which means it returns the exisiting address of the object(property) it copies over. Which means if we create two seperate objects using the spread operator the object it copies over will refernce the same location in memory, often this is not what we want, we want to have two completely seperate objects
+-to update an object in an array we use the map method
+-we can use the spread operator ie: ...<object> to copy properties from one object / array to another object / array 
+-when updating arrays of objects, we dont need to create a brand new copy of every object in an array, only the object that supposed to be modified, the other objects can be copies of the original array
+-we can use immer library to simplify our update logic when updating arrays and objects
+-as a rule of thumb remember the component that holds the state is the one that is responsible for updating it. Where we maintain the state, the the updates should be done in that component
+-we shouhld treat the props as immutable or read-only
+-react encourages the use of a centralized state management approach where data is manageed in a parent or container component and passed down to child components as props
+-a callback function is a function that is intended to be called at runtime
+-In react it is common practice to notify the parent component when an event occurs in a child component. This is so shared state can be updated accross components, it allows effective communication and coordination between parent and child components and it also increases the reuseability and flexibility of components
+-we use the state hook only for storing values that might change over time, and their change require re-rendering our component
+-the state hook allows us to add state to function components
+-hooks can only be called at the top level of components
+-group related state variables in an object to keep them organized
+-pure functions should not modify objects outside of the function - react expects our function components to be pure
+-when updating objects or arrays we should treat them as immutable obects. Instead of mutating them, we should create new objects or arrays to update the state
+-to share state between components we should lift the state up to the closest parent component and pass it down as props to child components
+-if a child component needs to update some state, it should notify the parent component using a call back function passed down as a prop
+-in JS functions are considered first class citizen, which means they are considered objects which can have both properties and methods
+-the DOM is created after react renders our component
+-to get the values inside a form we can use either the ref hook or the state hook
+-when we completely control the state of html markup with react we refer to those html elements as a controlled component 
+-we can use the React Hook Form library to manage our form state more easier especially when they get more complex. We can also use this library to implement validation
+-interfaces can improve developer experience by adding intellisense and enforce type safety
+-schema based validation will help us keep all our validation logic in one place, because for complex forms we will have validation logic all over the place. Zod is great library for this type of form data validation
+-typescript types are very simialr to a typescript interface ie: type FormData = z.infer<typeof schema>;
+-we want to pass props into components as to make them reuseable
+-In JS/TS a callback function is a function that is passed as an argument to another function and is intended to be called at a later point in time, often in response to some event or condition.
+-components will re-render when the state is updated
+-dont use state variables for things that can be computed from exisiting state variables
+-in zod an enum type can be one of many values
+-when you use the const keyword it means the variable itself can't be re-assigned but the values it hold can be modified. ie: const categories = ["Groceries", "Utilities", "Entertainment"]; i can't do this categories = ["Groceries", "Utilities", "Entertainment", "pooper"]; but I can do this categories.push('a');
+-you can make an object in typescript truely a constant or read-only by appending 'as const' at the end ie: export const categories = ["Groceries", "Utilities", "Entertainment"] as const;
+-be careful because the order in which components are loaded can cause errors, ie: you are trying to read an object but its not initialized yet
+-we can use the ref hook to access elements in the dom - this is often used to read the value of input fields upon form submission
+-with react hook form we no longer have to worry about using the ref or state hooks to manage the form state
+-to make our components pure we should keep any code that makes changes outside of the render phase
+-with the effect hook, we can tell react to exec a piece of code after a component is rendered
+-a piece of code has a side effect when it changes something outside of its component. ie: if we give an element focus, we change the state of the DOM. In react a side effect typically refers to any behaviour or action that occurs in a compnent that is not directly related to rendering or updating the components UI. In our above example giving the element focus has nothing to do with returning JSX markup or rendering the compnent. Common side effects in react include: storing data in local storage, calling the server to fetch or save data and manually modifying the DOM. If components have code that cause side effects the component is no longer pure. To solve this issue thats where the effect hook comes into the picture 
+-the function that we pass to the useEffect hook will be called after each render, so we include any piece of code that causes a side effect inside the function that we pass to the effect hook
+-react encourages a declarative approach to building UIs
+-just like the state and ref hooks, we can only call the effect hook at the top level of our components. So we cannot call it inside loops or if statements. Also like the ref and state hooks we can call it mulitple times for different purposes
+-when we have multiple effects, react will run them in order after each render
+-a better name for the effect hook would be 'afterRender'
+-we can pass an array of dependencies as the second optional argument for the useEffect hook. An empty array means the effect will only be executed once, the first time our component is rendered. Any values we pass in the array means anytime that value changes react should rerun this effect. If we leave out the second argument, react will exec our effect after every render
+-optionally we can return a cleanup function from the useEffect hook. Generally speaking the clean up function should undo or stop whatever the effect was doing
+-just like we can mount paintings on a wall, react mounts our components on the screen and unmounts them when they are no longer needed
+-A promise is an object that holds the eventual result or failure of an asynchronous operation. Asynchronous is just a fancy term for a long running operation
+-HTTP: hypertext transfer protocol - A protocol for transferring data over the internet
+-when we visit a website our browser sends an http request to the websites server asking for some content. The server then responds with an HTTP response which contains some html, css and other resources needed to display the website in our browser
+-In http every request and every response has two sections: the headers where we specify meta data and the body where we supply or get the data
+-in JS if we have a promise we can put the await keyword in front of the promise to get the result
+-type annotation is not allowed in a catch clause
+-prefer to use .then() and .catch() approach when dealing with promise objects as its shorter and more consciece then using the async and await approach
+-the else clause in an if statement acts as a catch all if the condition is false
+-as a best practice, when we fetch data in an effect, we should also provide a clean up function for cancelling the fetch request, incase the data is no longer needed
+-the finally method in promise objects will always be executed when promises are settled
+-optimistic update: update the UI first then call the server to save the changes (we are optimisatic the call to the server will be successful most of the time - is faster) pessimistic update: call the server, wait for the result. If the call is successful then update the UI (we assume the call to the server is going to fail - is slower)
+-the onClick attribute / event handler in our JSX markup takes a function reference (or inline arrow function definition) not a function call. ie: this is correct - onClick={() => deleteUser(user)} this is not correct - onClick={deleteUser(user)} so if we need to pass arguments to the event handler like the user object in this example then we need to wrap the call in a callback inline arrow function
+-in http we use the put method for replacing an object and the patch method for patching or updating one or more of its properties
+-CommonJS syntax and ES6/ES7 module syntax are different ways to import modules and both can be used accross TS and JS. With both of these module's syntax you can either export as a named (explictly at bottom of file) or default object (prefix before object reference)
+-be sure to use seperation of concerns in your components: our compnent should only be concerned with its primary responsibility which is returning some markup and handling user interactions at a high level. Not with concerns such as http. So we should seperate services from our actual components
+-generic type parameter: placeholder for a type. When we define a method / function using a generic type parameter we use a placeholder like <T> ie: getAll<T>() {}; (here getAll or getAll<T>() is called a generic function / method where <T> is acting as a placeholder) and then when we call the method we supply the generic type argument ie: getAll<User>(); or getAll<Post>(); (here <User> and <Post> are called generic type arguments).
+-interfaces allow you to specify the expected shape of data, types or objects in your application ie: interface User { id: number; name: string; }
+-a constructor is a function that is called when we create an instance of its class
+-we can add constraints to a type or tell the typescript compiler that the generic type in use should have a specific member by adding an interface and extending the generic type parameter in the function definition with the extends keyword. ie:
+interface Entity { id: number; } update<T extends Entity>(entity: T) { return apiClient.patch(this.endpoint + '/' + entity.id, entity) }
+-by convention all hooks should start with the word use.
+-we can define custom hooks to perform common operations and share functionality in our react code to reduce duplication and increase reusability
+-we use the effect hook to perform side effects such as fetching data or updating the DOM
+-react is a library for building front end UI, not a complete framework like angular
+-the communication between backend and front end happens over http, the same protocol that powers the web, The front end sends an http request to the backend and the backend sends an http response back
+-each http request and response contains a header and a body: the header provides meat data about the message like status code and the body contains the actual data being sent or received.
+-axios a popular JS library makes it easy to send requests to our backend
+-in JavaScript, callback functions are functions that are passed as arguments to other functions and are intended to be called at a later time or under certain conditions at runtime. Callbacks allow you to specify behaviour that should occur when a particular event or condition is met. They are a key concept in JS
+-query strings are used to transmit data from a client (usually a web browser) to a server as part of an http request. They are located at the end of the url and start with a ? followed by key/value pairs seperated by &. ie: https://example.com/search?q=apple&page=1 this example has two key/value pairs 'q=apple' and 'page=1'.  'q' and 'page' here are called query string parameters, these parameters are typically used by the server to perform specific actions or provide customized responses based on the values passed in the query string. ie: for this example the server uses the q param to perform a search for the term 'apple'. The web server then parses (analyses) the string to extract the data and uses it to generate a response.
+-for increased security for our API keys we can use a backend proxy server to act as an intermediatory between client app and API.
+-never check into source control like github an application which has a raw API key exposed for security
+-we cancel http requests using the abort controller
+-our components should only be responsible for returning markup and handling user intertactions, anything else like http requetss should be seperated into another module or made into a seperate hook. We can also use hooks for seperation of concerns and making our code more modular
+-always remember to include an array of dependencies in the effect hook as the second argument, otherwise we will continually be sending requests to our backend
+-basic CSS: if an image is bigger than its container than we wont see round corners due to the border-radius property.
+-you can think of a slug like a textual id, generally its not supposed to change so its reliable
+-an index signature is a feature in TS and JS that allows you to define an object type with dynamic keys.
+-finally method will not work with strict mode turned on 
+-use state variables for data that changes over time, for fixed values you can just use normal constants or variables
+-when we have values that are duplicated accross many places, this is bad because if tomorrow we decide to change the value, then we have to remember to change it in all those places.
+-Interfaces in TS are used to define the shape of objects and act as a contract for those objects to adher to
+-interfaces in both java and TS are similar in spirit as they both define contracts that objects or classes must adher to, but they have different features
+-our components shouldnt know anything about making http requests because of the seperation of concerns principal
+-once we declare a param as optional ie: requestConfig?: all the following params have to be optional as well.
+-use optional chaining ie: ?. when there is a possibility the object can be null
+-padding adds space within an element while margin adds space between elements
+-buttons by default dont wrap text
+-using index signature syntax we can tell the TS compiler that an object can have any number of keys and the keys are of the type we specify and the value of those keys are also the type we specify 
+-dont overuse loading indicatators when loading different parts of the page as it can negatively effect user experience as it makes their eyes dart around the page
+
+-a component is a piece of UI that has its own logic and appearance. React components are JS functions that return markup
+-run npm create vite@4.1.0 or vite@latest to create a new react app
+-the export default keywords specify the main component in the file. When you import this component in other areas of your code you can use your own variable names to reference the export 
+-JSX allows you to put markup into JS. Normally you can't write html inside your JS code.
+-when using the inline style attribute you need to pass an object to the JSX curly braces ie: style={{ color: product.isFruit ? "red" : "blue" }}
+-you need to make sure you prefix your main App component with export default otherwise it wont render properly ie: export default function App() {}
+-if we want our component to "remember" some information and display it, thats when we add state to our component. ie: to count the number of times a button is clicked
+-you will get x2 things from the useState() function, the current state or state variable and the function that lets you update it ie: const [count, setCount] = useState(0);
+-functions starting with use are called hooks, ie: useState and useRef. Hooks can only be called at the top of your components (ie: not in loops or if statements)
+-APIs in 3rd party library are functions, methods or interfaces that you can leverage to tap into that library. Ie: interact and utilize the features and functionality provided by that library.
+-by lifting state up to the parent component you can share it between child components.
+-the component state actual values are managed and passed down to children by the parent component, the child components are just cookie cutters, so we set the params on the child component, the actual arguments will be supplied inside the parent component
+-when you pass a value inside curly braces within JSX, it signifies that the value is a JS expression and that expression will be evaluated at runtime and the result of the expression shown in the browser
+-we are not supposed to change the value of props in the child, it has to be done in the parent
+-number one rule of state, you never assign a value to the variable directly, you always go through the state variable function
+-tailwind abstracts the core css rules and replaces them with classes
+-in react you use state when you need to manage and track data that can change over time and influence the rendering of your components. State is used to represent the dynamic aspects of your application, such as user interactions, data fectching and component updates in response to changing conditions
+-when you see a line like this: export default function Square() {} - the export keyword makes this function accessible outside of this file, the default keyword tells other files using your code that its the main function in your file.
+-the return keyword inside a function in JS means whatever comes after is returned as a value to the caller of the function.
+-A JSX element ie: <button className="square">X</button>  is a combination of JS and html that describes what you would like to display. In normal JS you can't combine html with JS in this way.
+-In react we use props (properties) to pass values from parent components to child components. So we use props to pass values to our components.
+-the main.jsx file is the bridge between your root component (ie: App.jsx) and the web browser
+-to escape in JS from JSX we use curly braces
+-to remember things components use state, ie: remember that it got clicked and should do something in response
+-when you cakk a set function in a componetn, React automatically updates the child components inside too
+-lifting state up: when child components need to share state or communicate with each other, declare the shared state in the parent component instead
+-state is private to a component that defines it
+-calling the set function of a state variable lets React know the state of the component has changed. This will trigger a re-render of the components that use the state variable
+-JS supports closures which means an inner function has access to variables and functions defined in a outer function. If the variables / functions and the inner function are both defined in the outer function, then the inner function can read those variables / functions.
+-In react it is conventional to use onSomething names for props which represent events and handleSomething for the function definitions which handle those events.
+-becareful of being caught in infinite loops where, a change in state causes a re-render which triggers another change in state, which causes another rerender and so forth.
+-we should not mutate the state variable but instead create copies of it - this is because we can keep previous versions of the data intact and reuse them later.
+-returning early from functions is a good way to not mutate state based on an event or condition
+-when you prefix function with export default it means you intend this component to be the top level component ie: export default function Game() {}
+-In JS the map method is specifically designed to take an array in one form as input and return another array as output in another form
+-Be sure to assign proper keys to your list items whenever you build dynamic lists
+-state is data that can change
+-always try to avoid redundant state - simplifying what you store in state reduces bugs and makes your code easier to understand.
+-think about your react components from the point of the single responsibility principle, that is your component should ideally only do one thing. If it ends up growing, it should be decomposed into smaller sub components
+-a good approach to building a react app is to build the static version first then add interactivity after
+-props are a way of passing data from a parent to a child
+-you should create a component heirarchy when designing your app. When building your app; for simple apps go for a top down approach and more complex apps go bottom up when building components
+-the function of props in react to pass data from parent components to child components so they can be rendered by the child component
+-one way data flow in react is when data flows from the top level component to the ones at the bottom of the tree
+-keep your state as minimal as possible, if you can compute values without creating new state variables do so as unnessary state values can make your app complex
+-think of state as the minimal set of changing data that your app needs to remember. The most important principal of structuring data is DRY. Figure out the absolute minmal representation of the state and compute everything else on demand.
+-state: if it remains unchanged overtime, if its passed in from a parent via props or you can compute it based on exisiting data then its not state. Whats left over is probably state.
+-props are like arguments you pass to a function. They let a parent component pass data to a child
+-state is like a components memory. It lets a component keep track of some information and change it is response to interactions. ie: a button might keep track of how many times its clicked.
+-react uses one way data flow passing data down the component hierarchy from parent to child component. It may not be clear which component should own state. You should add inverse data flow when you need to notify a parent of an event that occured in a child component so that parent can change the state and render the component
+-usually state should live in the parent for child compnents that render something based on that state. In most cases its good practice to keep state that affects multiple child compoentns in a common parent component. This promote a cleaner and more organized way of managing state in your app. Although, typically you should aim to keep state as local as possible and lift it up to a common ancestor component only when it needs to be shared between multiple components.
+-you can also put state in a component above the parent or if you can't find a suitable place then you can create a new component solely for holding the state and add it above the common parent
+-strategy for state: 1. identify the components that use the state, 2. find their common parent, 3. decide where the state lives.
+-hooks are special functions that let you hook into react features
+-there are two types of props in react. Built in props: are provided by react itself and are associated with specific HTML elements or react components ie: onClick, onChange, value and style. User defined Props: allow you to pass data from parent to child components in order to customize the appearance or behaviour of the child Prop.
+-components have 3 main lifecycle phases: mount, update, unmount
+-the useEffect hook allows us to perform side effects during the lifecycle of a component 
+-useEffect is simply a function that allows us to manage our component lifecycle
+-the two most commons hooks that you will use are useEffect and useState
+-hooks only apply to functional components and they are functions that allow us to manage state and life cycle features.
+-when it comes to rendering out a list of data in your components, we need to make sure to specify the key prop
+-thinking in react: think about what you want the final product of your app to look like
+-imperative programming describes how to do something while declarative programming states what you want to happen
+-once the state on your component changes that component and its children will be re-rendered while the parent components stay the same
+-if you want to modify the existing state we need to pass a function to the state updater function that takes the previous state as an argument ie: setCounter((prevCounter) => prevCounter + 1);
+-anything inside curly brackets in your JSX will be run as JS code ie: the values will be computed dynamically as opposed to statically
+-we should not use the index of the array for the unique identifier for the key prop because if we remove elements then elements in the array get shifted around and that cab really mess up the order
+-state in react is immuteable which means you cannot change it directly, you always have to return new state and not mutate the original state directly, even the updater function returns a new state object with the same name and does not mutates the original state object
+-props allow you to pass information down to custom components
+-useEffect does not return anything and takes a function as its argument
+-locla storage allows you to store key / value pairs in the web browser
+-hooks must be called at the top level of your files, ie on their own, they cannot be called as part of an if function or loop for example - so allways put your hooks at the top of your file to not run into any issues
+-if a value changes throughout the lifecycle of a component and we want those changes to trigger a re-render, then we should add that value as a state variable
+-a component is for breaking down the individual parts of our application
+-callback functions are functions that are invoked later during runtime in response to an event and not executed immediately
+-react hooks can only be called in functional components and not class based components
+-when we use the setter function of a stateful variable, it will trigger a re-render of the virtual dom
+-state in an application just refers to its current condition
+-in react we declare what we want our output to look like and react does all the magic behind the scences (as opposed to imperative style)
+-we use state in react to make our webpage interactive
+-our JSX gets compiled down to regular JS and then the actual DOM gets updated efficiently through 'reconciliation' with the virtual DOM
+-nodeJS is a backend JS runtime environment - it executes JS code outside of the browser
+-files in the public folder are not bundled during the final output but files in the asset folder are. They can be files like fonts, images, videos etc
+-main.jsx is the main JS file for our app and loads in the global css file along with the root component to be rendered in index.html - it goes together with index.html which is the entry point to our app that loads in main.jsx via a script tag.
+-App.jsx is the root component
+-index.css is the global css file but each component can have their own css files like App.css
+-package.json contains metadata about our project
+-we add other components to our App component as its the root and its job is to tie them all together
+-event listeners are prefixed with on in the props of elements ie: onClick
+-in react components we just return the exact output of what we want it to look like
+-always remember when you change your state variable, it will trigger a re-render
+-in react event handler functions typically take an event object as a parameter because the event object contains information about the event that occured such as the target element, type of event and other details ie: function handleSubmit(e){ const targetElement = e.target; const eventType = e.type; // Do something with the event information}
+-when we want to update the state based on the previous state we use the functional form of the 'setState' function to avoid race conditions and potential issues associated with asynchronous rendering. We just return from the setState function what we want the new state to be based on the previous state
+-so the setState function can take a value or function depending on whether you are setting the state indepentantly or based on the exisiting state respectively
+-when your returning a collection in react ie an array we should make sure each element (at the top level )has a unique key property associated with it - this is so react knows what element to update in the virtual DOM when its modified its a performance optimisation. Generally its a bad idea to use the index of the element in the array because if we delete elements or shift them around it can mess up with the order of elements
+-we only need curcly braces to insert JS inside the return statement but outside of it, we dont
+-react is all about reusing components
+-remember you cannot mutate state directly, you have to return new state with the updated values if you use the functional form of the setState function or pass a new state object to the setState function
+-the onChange event handler is triggered when the inputs value changes for check boxes this is when the checked property changes, for text inputs this triggers when a character is added, removed or modified within the input
+-event handlers such as onClick or onChange expect a function reference if no arguments are to be passed in the function otherwise it expects a callback function if arguments need to be passed ie: onClick={deleteTodo} or onClick={(id) => deleteTodo(id)} respectively - note we cannot pass a function call like deleteTodo() because this would mean the function gets executed upon render, we want the function to only be executed when the button is actually clicked so we need to pass the function refernce or callback function
+-props allow you to pass data from parent components to child components
+-we can use the object spread operator to spread object properties as individual props ie: {...todo} this is a shorthand way of listing individual props of an object seperately and the JSX compiler will do the work of converting the semi colons to equal signs ie: <TodoItem {...todo} /> and <TodoItem id={todo.id} title={todo.title} completed={todo.completed} key={todo.id} /> are equivilent
+-padding in CSS increases the space between the elements content and its borders
+-using external stylesheets (normal css) can lead to naming conflicts especially in large web apps with many components and classes - it may become hard to keep track of all the different class names and keeping the names of classes unique - by using css modules we can avoid naming conflicts because a unique class is generated under the hook via a hashin algo
+-we cant use dashes within JSX
+-3 different ways to style react components with CSS: external(global), modules (same folder), inline
+-useEffect takes a function as its argument and a dependency array as its second arg, when anything inside the array changes the useEffect hook gets rerun, if we only want to run it once we pass an empty array. The useEffect hook is designed to manage the component lifecycle with you being able to run code during the mounting, updating and dismounting phase - it allows us to produce side effects in our functional components inlcuding data fetching, persisting data to local storage and manually manipulating the dom
+-local storage: we need to specify a key to save to and stringfy our JS object ie:   useEffect(() => {localStorage.setItem('ITEM', JSON.stringify(todos))}, [todos])
+-always put hooks at the top of your file
+-anatomy of react function: hooks, then utility functions then we return some JSX.
+-props: read only properties that are shared between components, a parent component can send data to a child component: when you include a componetn within a parent you can send that child component key/value pairs. Try and think of props as key/value pairs
+-boolean dont display directly to the DOM, they are usually used with ternary operators or short circuiting
+-em in css is percentage ie: 2em is 200%
+-when your working with props its also good practice to also use prop types which gives type safety to your app
+-default props: default values for props in case they are not passed from the parent component
+-jsx components must return some jsx from all execution paths
+-props are immuteable form of data, so we can't modify it once its passed down. Props is passed as an object
+-state is data we can actually update
+-the key prop is required to identify items in a collection for the virtual DOM
+-the functional form of the state updater function takes receives the current state and returns the new state
+-stream: a sequence of data elements made available over time. It can be thought of as a flow of data that is processed or consumed incrementally rather than all at once. They are commonly used in scenarios where handling large amounts of data or processing that data in real-time is necessary
+-? is the optional chaining operator and is used to handle cases where the object to its left maybe null or undefined and it wont throw errors if thats the case
+-in react when we are working with form fields we need to add in an onChange event to actually update the form as we type things
+-curl is a command line tool for making http requests
+-state is just information about what we are rendering out (our component)
+-hooks are a set of functions that allow functional components to 'tap or hook into' react features such as state among others
+contentEditable attribute on label = boolean
+-useState sets the value and updates our state
+-useEffect can fire off on the first load or after every update (re-render)
+-useEffect dependency array: represents when the effect hook fires off ie: if its empty array it only fires once on page load, if we put objects inside, it will fire off everytime one of those objects updates or changes, if we omit the array, then it will fire everytime the page is updated (changes). For unmounting we just return a tear down function inside the function passed to useEffect, this function will be used to do any clean up after the component unmounts ie: useEffect(() => {return () => {}}, []); - useEffect is a hook that triggers depending on the components state
+-we cannot pass an async function to useEffect
+-state is mutable where as props we cannot update
+-if we dont pass a list of dependencies to useEffect, it will fire after every render
+-whenever objects inside the list of dependencies to useEffect updates (or changes) useEffect will be rerun
+-so with const the value and name cannot change unless its a object or array upon which elements can be modified
+-cors error: just means the request is not allowed from where it originated from, this happens when we run the front and backend from different ports. We need to make sure we set this up so the client is allowed to make requests to the backend.
+-we can set a proxy url at package.json ie: "proxy": "http://127.0.0.1:8000/", - then we can truncate our endpoints for our api calls
+-optional chaining operator ie: ?. - it means if the object to the left exists then use it otherwise make it undefined and do nothing
+-put is for partial updates of an object
+-when we place functions outside the component, they will only be defined once when the component is loaded or imported, if we define functions inside the component they will be defined in every re-render of that component, so every state change and component lifecycle - therefore for performance reasons, when possible we should place functions outside the component if they dont rely on the components specific state or props and if they are being re-used in other parts of the application
+- we use functions in our code when we want to perform some task or action - the majority of functions return a value but some return void so they change the state of the system by performing some side effect
+-when we run npm run build - react optimises our files and bundles them together as static files inside the build folder
+-we dont need to use traditional forms to submit data when using react and DRF together so we dont need to do things like csrf_tokens etc - its all taken care of so its a good nice to have
+-to make an api restful, the same endpoint should be able to handle a variety of http methods ie: get, post, put, delete, 
+-restful is more of a practice / style in how your building our your apis
+
+-click event: an interaction when a user clicks on a specific element. We can respond to clicks by passing a callback function to the onClick event handler
+-if we add a set of parenthesis after a callback function we will invoke it right away - if we have arguments we need to send to a function we can wrap the callback inside an arrow function. The lesson is, if our callback function has no parameters we can provide a reference to the function as the value to the onClick event handler if its defined elsewhere (ie: not inline) but if our callback function has params then we need to wrap inside an arrow function because when we use parethesis it will be invoked on page load
+-with click events we are automatically provided with an event parameter, its an object that describes the event that occured ie: const handleClick = e => console.log(e);
+-with arrow function syntax: you can omit the return statement and curly braces if you only have one expression in the function body ie: const handleClick = () => "hello world";
+-with arrow function syntax: when we have no arguments, we leave parethesis empty ie: const handleClick = () => console.log("hello world"); if we have one argument we can omit parethesis ie: const handleClick = e => console.log(e); - although prettier will add parethesis even if one arg, so its fine to always use parethesis when defining all your args in arrow function syntax. If we have one or more args we need to use parethesis and seperate with comma ie: const handleClick = (a, b, c) => console.log(a, b, c);
+-a callback is a function where its invocation is defferred
+-when we have parameters in a function we need to send a matching number of arguments
+-if we add a set of parethesis after a callback we will invoke it right away
+-if we have more than one line of code (or more than one expression) we will need to use a set of curly braces in the function body
+-when passing functions to the onClick event handler, if we have a parameter we need to wrap the function call inside an arrow function, otherwise it will be invoked immediately
+-when specifing relative paths in your react project (except for importing components) you need to add ./ to denote the current folder or ../ to go up one level, then include the path of the resource including the current folder your in ie: const imageUrl = './src/assets/profile.jpeg'; - here the react component ProfilePicture.jsx is located inside the src folder and the profile image is located inside the assets folder which sits inside the src folder
+-by accessing the event object that gives us lots of possiblities of what we can do
+--we can make our components reusable by passing props into them and not having data hardcoded inside them
+-we can list default props before we export our component
+-as a best practice if we are accepting props we should set up prop types
+-click events: an interaction when a user clicks on a specific element. We can respond to clicks by passing a callback to the onClick event handler
+-many HTML element have an onClick event handler ie: <button onClick={handler}>Click Me</button>
