@@ -1,10 +1,10 @@
-import MyComponent4 from './MyComponent4'
+import MyComponent5 from './MyComponent5'
 
 
 function App() {
 
 
-  return (<MyComponent4 />);
+  return (<MyComponent5 />);
 }
 
 export default App;
