@@ -1,12 +1,13 @@
 // you may need to adjust css because we are sharing one file for all components and projects
 
-import MyComponent7 from './MyComponent7'
-
+import DigitalClock from "./DigitalClock/DigitalClock";
 
 function App() {
-
-
-  return (<MyComponent7 />);
+  return (
+    <>
+      <DigitalClock />
+    </>
+  );
 }
 
 export default App;
