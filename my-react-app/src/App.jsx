@@ -1,11 +1,11 @@
 // you may need to adjust css because we are sharing one file for all components and projects
 
-import ComponentA from "./ComponentA";
+import MyComponent8 from "./MyComponent8";
 
 function App() {
   return (
     <>
-      <ComponentA />
+      <MyComponent8 />
     </>
   );
 }
