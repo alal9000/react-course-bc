@@ -20,21 +20,20 @@ export default function DigitalClock() {
     const seconds = time.getSeconds();
     const meridiem = hours >= 12 ? "PM" : "AM";
 
-    hours = hours % 12 || 12;
+    hours = hours % 12 || 12; // convert from military to standard time
 
-    return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)} ${meridiem}`;
+    return `${padZero(hours)}:${padZero(minutes)}:${padZero(
+      seconds
+    )} ${meridiem}`;
   }
 
-  function padZero(number){
+  function padZero(number) {
     return (number < 10 ? "0" : "") + number;
-
   }
 
   return (
     <div className="clock-container">
-      <div className="clock">
-        <span>{formatTime()}</span>
-      </div>
+      <div className="clock">{formatTime()}</div>
     </div>
   );
 }
