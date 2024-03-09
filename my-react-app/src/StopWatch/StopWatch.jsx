@@ -30,7 +30,7 @@ export default function StopWatch() {
 
   function reset() {
     setElapsedTime(0);
-    isRunning(false);
+    setIsRunning(false);
   }
 
   function formatTime() {
